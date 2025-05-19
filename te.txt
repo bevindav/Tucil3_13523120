@@ -1,0 +1,50 @@
+Move: Initial State
+AAB..F 
+..BCDF 
+GPPCDFK
+GH.III 
+GHJ... 
+LLJMM. 
+
+Move: Move C to up
+AABC.F 
+..BCDF 
+GPP.DFK
+GH.III 
+GHJ... 
+LLJMM. 
+
+Move: Move I to left
+AABC.F 
+..BCDF 
+GPP.DFK
+GHIII. 
+GHJ... 
+LLJMM. 
+
+Move: Move F to down
+AABC.. 
+..BCD. 
+GPP.D.K
+GHIIIF 
+GHJ..F 
+LLJMMF 
+
+Move: Move D to up
+AABCD. 
+..BCD. 
+GPP...K
+GHIIIF 
+GHJ..F 
+LLJMMF 
+
+Move: Move P to right
+AABCD. 
+..BCD. 
+G....PK
+GHIIIF 
+GHJ..F 
+LLJMMF 
+
+Visited nodes: 210
+Execution time: 186 ms

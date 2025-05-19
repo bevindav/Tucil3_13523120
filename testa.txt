@@ -1,0 +1,92 @@
+Move: Initial State
+
+=====================================
+  Rush Hour Solver [Jakarta Edition]
+=====================================
+
+ A  A  B [34m . [0m[34m . [0m F 
+[34m . [0m[34m . [0m B  C  D  F 
+ G [31m P [0m[31m P [0m C  D  F 
+ G  H [34m . [0m I  I  I 
+ G  H  J [34m . [0m[34m . [0m[34m . [0m
+ L  L  J  M  M [34m . [0m
+
+=====================================
+
+Move: Move C to up
+
+=====================================
+  Rush Hour Solver [Jakarta Edition]
+=====================================
+
+ A  A  B  C [34m . [0m F 
+[34m . [0m[34m . [0m B  C  D  F 
+ G [31m P [0m[31m P [0m[34m . [0m D  F 
+ G  H [34m . [0m I  I  I 
+ G  H  J [34m . [0m[34m . [0m[34m . [0m
+ L  L  J  M  M [34m . [0m
+
+=====================================
+
+Move: Move D to up
+
+=====================================
+  Rush Hour Solver [Jakarta Edition]
+=====================================
+
+ A  A  B  C  D  F 
+[34m . [0m[34m . [0m B  C  D  F 
+ G [31m P [0m[31m P [0m[34m . [0m[34m . [0m F 
+ G  H [34m . [0m I  I  I 
+ G  H  J [34m . [0m[34m . [0m[34m . [0m
+ L  L  J  M  M [34m . [0m
+
+=====================================
+
+Move: Move I to left
+
+=====================================
+  Rush Hour Solver [Jakarta Edition]
+=====================================
+
+ A  A  B  C  D  F 
+[34m . [0m[34m . [0m B  C  D  F 
+ G [31m P [0m[31m P [0m[34m . [0m[34m . [0m F 
+ G  H  I  I  I [34m . [0m
+ G  H  J [34m . [0m[34m . [0m[34m . [0m
+ L  L  J  M  M [34m . [0m
+
+=====================================
+
+Move: Move F to down
+
+=====================================
+  Rush Hour Solver [Jakarta Edition]
+=====================================
+
+ A  A  B  C  D [34m . [0m
+[34m . [0m[34m . [0m B  C  D [34m . [0m
+ G [31m P [0m[31m P [0m[34m . [0m[34m . [0m[34m . [0m
+ G  H  I  I  I  F 
+ G  H  J [34m . [0m[34m . [0m F 
+ L  L  J  M  M  F 
+
+=====================================
+
+Move: Move P to right
+
+=====================================
+  Rush Hour Solver [Jakarta Edition]
+=====================================
+
+ A  A  B  C  D [34m . [0m
+[34m . [0m[34m . [0m B  C  D [34m . [0m
+ G [34m . [0m[34m . [0m[34m . [0m[34m . [0m[31m P [0m
+ G  H  I  I  I  F 
+ G  H  J [34m . [0m[34m . [0m F 
+ L  L  J  M  M  F 
+
+=====================================
+
+Visited nodes: 79
+Execution time: 73 ms

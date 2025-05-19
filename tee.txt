@@ -1,0 +1,226 @@
+Move: Initial State
+AAB..F 
+..BCDF 
+GPPCDFK
+GH.III 
+GHJ... 
+LLJMM. 
+
+Move: Move C to up
+AABC.F 
+..BCDF 
+GPP.DFK
+GH.III 
+GHJ... 
+LLJMM. 
+
+Move: Move D to up
+AABCDF 
+..BCDF 
+GPP..FK
+GH.III 
+GHJ... 
+LLJMM. 
+
+Move: Move P to right
+AABCDF 
+..BCDF 
+G.PP.FK
+GH.III 
+GHJ... 
+LLJMM. 
+
+Move: Move P to right
+AABCDF 
+..BCDF 
+G..PPFK
+GH.III 
+GHJ... 
+LLJMM. 
+
+Move: Move M to right
+AABCDF 
+..BCDF 
+G..PPFK
+GH.III 
+GHJ... 
+LLJ.MM 
+
+Move: Move J to up
+AABCDF 
+..BCDF 
+G.JPPFK
+GHJIII 
+GH.... 
+LL..MM 
+
+Move: Move M to left
+AABCDF 
+..BCDF 
+G.JPPFK
+GHJIII 
+GH.... 
+LLMM.. 
+
+Move: Move M to right
+AABCDF 
+..BCDF 
+G.JPPFK
+GHJIII 
+GH.... 
+LL.MM. 
+
+Move: Move H to up
+AABCDF 
+..BCDF 
+GHJPPFK
+GHJIII 
+G..... 
+LL.MM. 
+
+Move: Move L to right
+AABCDF 
+..BCDF 
+GHJPPFK
+GHJIII 
+G..... 
+.LLMM. 
+
+Move: Move M to right
+AABCDF 
+..BCDF 
+GHJPPFK
+GHJIII 
+G..... 
+.LL.MM 
+
+Move: Move L to right
+AABCDF 
+..BCDF 
+GHJPPFK
+GHJIII 
+G..... 
+..LLMM 
+
+Move: Move J to down
+AABCDF 
+..BCDF 
+GH.PPFK
+GHJIII 
+G.J... 
+..LLMM 
+
+Move: Move L to left
+AABCDF 
+..BCDF 
+GH.PPFK
+GHJIII 
+G.J... 
+LL..MM 
+
+Move: Move L to right
+AABCDF 
+..BCDF 
+GH.PPFK
+GHJIII 
+G.J... 
+.LL.MM 
+
+Move: Move M to left
+AABCDF 
+..BCDF 
+GH.PPFK
+GHJIII 
+G.J... 
+.LLMM. 
+
+Move: Move H to up
+AABCDF 
+.HBCDF 
+GH.PPFK
+G.JIII 
+G.J... 
+.LLMM. 
+
+Move: Move M to right
+AABCDF 
+.HBCDF 
+GH.PPFK
+G.JIII 
+G.J... 
+.LL.MM 
+
+Move: Move L to left
+AABCDF 
+.HBCDF 
+GH.PPFK
+G.JIII 
+G.J... 
+LL..MM 
+
+Move: Move M to left
+AABCDF 
+.HBCDF 
+GH.PPFK
+G.JIII 
+G.J... 
+LLMM.. 
+
+Move: Move M to right
+AABCDF 
+.HBCDF 
+GH.PPFK
+G.JIII 
+G.J... 
+LL.MM. 
+
+Move: Move J to down
+AABCDF 
+.HBCDF 
+GH.PPFK
+G..III 
+G.J... 
+LLJMM. 
+
+Move: Move M to right
+AABCDF 
+.HBCDF 
+GH.PPFK
+G..III 
+G.J... 
+LLJ.MM 
+
+Move: Move I to left
+AABCDF 
+.HBCDF 
+GH.PPFK
+GIII.. 
+G.J... 
+LLJ.MM 
+
+Move: Move M to left
+AABCDF 
+.HBCDF 
+GH.PPFK
+GIII.. 
+G.J... 
+LLJMM. 
+
+Move: Move F to down
+AABCD. 
+.HBCD. 
+GH.PP.K
+GIII.F 
+G.J..F 
+LLJMMF 
+
+Move: Move P to right
+AABCD. 
+.HBCD. 
+GH...PK
+GIII.F 
+G.J..F 
+LLJMMF 
+
+Visited nodes: 135
+Execution time: 590 ms
