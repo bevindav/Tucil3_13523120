@@ -4,8 +4,6 @@ import java.io.*;
 import java.util.*;
 import java.util.List;
 import javax.swing.Timer;
-import javax.swing.border.*;
-import java.awt.event.*;
 
 public class App extends JFrame {
     private static final int WIDTH = 800;
@@ -17,10 +15,12 @@ public class App extends JFrame {
     private List<State> solutionPath;
     private int currentStep = 0;
     private boolean isAnimating = false;
-    
+    private int selectedHeuristic = Heuristic.MANHATTAN_DISTANCE;
+
     private GamePanel boardPanel;
     private JButton loadButton;
     private JComboBox<String> algorithmComboBox;
+    private JComboBox<String> heuristicComboBox;
     private JButton solveButton;
     private JButton saveButton;
     private JButton playPauseButton;
@@ -74,8 +74,20 @@ public class App extends JFrame {
         String[] algorithms = {"UCS", "GBFS", "A*", "Beam Search"};
         algorithmComboBox = new JComboBox<>(algorithms);
         algorithmComboBox.setToolTipText("Select search algorithm");
-        algorithmComboBox.addActionListener(e -> selectedAlgorithm = (String) algorithmComboBox.getSelectedItem());
+        algorithmComboBox.addActionListener(e -> {
+            String algo = (String) algorithmComboBox.getSelectedItem();
+            heuristicComboBox.setEnabled(!algo.equals("UCS"));
+            selectedAlgorithm = algo;
+        });
 
+
+        String[] heuristics = {"Manhattan Distance", "Blocking Vehicles", "Advanced Blocking", "Combined"};
+        heuristicComboBox = new JComboBox<>(heuristics);
+        heuristicComboBox.setToolTipText("Select heuristic function");
+        heuristicComboBox.setEnabled(false);
+        heuristicComboBox.addActionListener(e -> {
+            selectedHeuristic = heuristicComboBox.getSelectedIndex();
+        });
         solveButton = createButton("Solve", "Solve the puzzle with selected algorithm");
         solveButton.addActionListener(e -> solvePuzzle());
 
@@ -122,6 +134,8 @@ public class App extends JFrame {
         topControls.add(loadButton);
         topControls.add(new JLabel("Algorithm:"));
         topControls.add(algorithmComboBox);
+        topControls.add(new JLabel("Heuristic:"));
+        topControls.add(heuristicComboBox);
         topControls.add(solveButton);
         topControls.add(saveButton);
         
@@ -332,18 +346,18 @@ public class App extends JFrame {
                         visitedNodesLabel.setText("Visited nodes: " + result.visitedNodes);
                         break;
                     case "GBFS":
-                        result = GBFS.GUIsolve(initialState);
+                        result = GBFS.GUIsolve(initialState, selectedHeuristic);
                         execTimeLabel.setText("Execution time: " + result.executionTime + " ms");
                         visitedNodesLabel.setText("Visited nodes: " + result.visitedNodes);
                         break;
                     case "A*":
-                        result = AStar.GUIsolve(initialState);
+                        result = AStar.GUIsolve(initialState, selectedHeuristic);
                         execTimeLabel.setText("Execution time: " + result.executionTime + " ms");
                         visitedNodesLabel.setText("Visited nodes: " + result.visitedNodes);
                         break;
                     case "Beam Search":
                     //2
-                        result = BeamSearch.GUIsolve(initialState, 2);
+                        result = BeamSearch.GUIsolve(initialState, 2, selectedHeuristic);
                         execTimeLabel.setText("Execution time: " + result.executionTime + " ms");
                         visitedNodesLabel.setText("Visited nodes: " + result.visitedNodes);
                         break;

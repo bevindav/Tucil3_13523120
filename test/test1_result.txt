@@ -1,0 +1,518 @@
+Rush Hour Solution - Tue May 20 18:55:12 WIB 2025
+Algorithm used: GBFS
+Total steps: 56
+-------------------------------------
+
+Step 0: Initial State
+AAB..F 
+..BCDF 
+GPPCDFK
+GH.III 
+GHJ... 
+LLJMM. 
+
+
+Step 1: Move C to up
+AABC.F 
+..BCDF 
+GPP.DFK
+GH.III 
+GHJ... 
+LLJMM. 
+
+
+Step 2: Move P to right
+AABC.F 
+..BCDF 
+G.PPDFK
+GH.III 
+GHJ... 
+LLJMM. 
+
+
+Step 3: Move D to up
+AABCDF 
+..BCDF 
+G.PP.FK
+GH.III 
+GHJ... 
+LLJMM. 
+
+
+Step 4: Move P to right
+AABCDF 
+..BCDF 
+G..PPFK
+GH.III 
+GHJ... 
+LLJMM. 
+
+
+Step 5: Move M to right
+AABCDF 
+..BCDF 
+G..PPFK
+GH.III 
+GHJ... 
+LLJ.MM 
+
+
+Step 6: Move J to up
+AABCDF 
+..BCDF 
+G.JPPFK
+GHJIII 
+GH.... 
+LL..MM 
+
+
+Step 7: Move L to right
+AABCDF 
+..BCDF 
+G.JPPFK
+GHJIII 
+GH.... 
+.LL.MM 
+
+
+Step 8: Move G to down
+AABCDF 
+..BCDF 
+..JPPFK
+GHJIII 
+GH.... 
+GLL.MM 
+
+
+Step 9: Move M to left
+AABCDF 
+..BCDF 
+..JPPFK
+GHJIII 
+GH.... 
+GLLMM. 
+
+
+Step 10: Move H to up
+AABCDF 
+.HBCDF 
+.HJPPFK
+G.JIII 
+G..... 
+GLLMM. 
+
+
+Step 11: Move M to right
+AABCDF 
+.HBCDF 
+.HJPPFK
+G.JIII 
+G..... 
+GLL.MM 
+
+
+Step 12: Move L to right
+AABCDF 
+.HBCDF 
+.HJPPFK
+G.JIII 
+G..... 
+G.LLMM 
+
+
+Step 13: Move J to down
+AABCDF 
+.HBCDF 
+.H.PPFK
+G.JIII 
+G.J... 
+G.LLMM 
+
+
+Step 14: Move L to left
+AABCDF 
+.HBCDF 
+.H.PPFK
+G.JIII 
+G.J... 
+GLL.MM 
+
+
+Step 15: Move B to down
+AA.CDF 
+.HBCDF 
+.HBPPFK
+G.JIII 
+G.J... 
+GLL.MM 
+
+
+Step 16: Move M to left
+AA.CDF 
+.HBCDF 
+.HBPPFK
+G.JIII 
+G.J... 
+GLLMM. 
+
+
+Step 17: Move A to right
+.AACDF 
+.HBCDF 
+.HBPPFK
+G.JIII 
+G.J... 
+GLLMM. 
+
+
+Step 18: Move H to down
+.AACDF 
+..BCDF 
+.HBPPFK
+GHJIII 
+G.J... 
+GLLMM. 
+
+
+Step 19: Move M to right
+.AACDF 
+..BCDF 
+.HBPPFK
+GHJIII 
+G.J... 
+GLL.MM 
+
+
+Step 20: Move G to up
+.AACDF 
+G.BCDF 
+GHBPPFK
+GHJIII 
+..J... 
+.LL.MM 
+
+
+Step 21: Move M to left
+.AACDF 
+G.BCDF 
+GHBPPFK
+GHJIII 
+..J... 
+.LLMM. 
+
+
+Step 22: Move L to left
+.AACDF 
+G.BCDF 
+GHBPPFK
+GHJIII 
+..J... 
+LL.MM. 
+
+
+Step 23: Move J to down
+.AACDF 
+G.BCDF 
+GHBPPFK
+GH.III 
+..J... 
+LLJMM. 
+
+
+Step 24: Move M to right
+.AACDF 
+G.BCDF 
+GHBPPFK
+GH.III 
+..J... 
+LLJ.MM 
+
+
+Step 25: Move I to left
+.AACDF 
+G.BCDF 
+GHBPPFK
+GHIII. 
+..J... 
+LLJ.MM 
+
+
+Step 26: Move G to down
+.AACDF 
+..BCDF 
+GHBPPFK
+GHIII. 
+G.J... 
+LLJ.MM 
+
+
+Step 27: Move M to left
+.AACDF 
+..BCDF 
+GHBPPFK
+GHIII. 
+G.J... 
+LLJMM. 
+
+
+Step 28: Move I to right
+.AACDF 
+..BCDF 
+GHBPPFK
+GH.III 
+G.J... 
+LLJMM. 
+
+
+Step 29: Move M to right
+.AACDF 
+..BCDF 
+GHBPPFK
+GH.III 
+G.J... 
+LLJ.MM 
+
+
+Step 30: Move B to down
+.AACDF 
+...CDF 
+GHBPPFK
+GHBIII 
+G.J... 
+LLJ.MM 
+
+
+Step 31: Move M to left
+.AACDF 
+...CDF 
+GHBPPFK
+GHBIII 
+G.J... 
+LLJMM. 
+
+
+Step 32: Move G to up
+.AACDF 
+G..CDF 
+GHBPPFK
+GHBIII 
+..J... 
+LLJMM. 
+
+
+Step 33: Move H to down
+.AACDF 
+G..CDF 
+G.BPPFK
+GHBIII 
+.HJ... 
+LLJMM. 
+
+
+Step 34: Move A to left
+AA.CDF 
+G..CDF 
+G.BPPFK
+GHBIII 
+.HJ... 
+LLJMM. 
+
+
+Step 35: Move M to right
+AA.CDF 
+G..CDF 
+G.BPPFK
+GHBIII 
+.HJ... 
+LLJ.MM 
+
+
+Step 36: Move H to up
+AA.CDF 
+GH.CDF 
+GHBPPFK
+G.BIII 
+..J... 
+LLJ.MM 
+
+
+Step 37: Move B to up
+AA.CDF 
+GHBCDF 
+GHBPPFK
+G..III 
+..J... 
+LLJ.MM 
+
+
+Step 38: Move I to left
+AA.CDF 
+GHBCDF 
+GHBPPFK
+GIII.. 
+..J... 
+LLJ.MM 
+
+
+Step 39: Move M to left
+AA.CDF 
+GHBCDF 
+GHBPPFK
+GIII.. 
+..J... 
+LLJMM. 
+
+
+Step 40: Move I to right
+AA.CDF 
+GHBCDF 
+GHBPPFK
+G.III. 
+..J... 
+LLJMM. 
+
+
+Step 41: Move M to right
+AA.CDF 
+GHBCDF 
+GHBPPFK
+G.III. 
+..J... 
+LLJ.MM 
+
+
+Step 42: Move H to down
+AA.CDF 
+G.BCDF 
+G.BPPFK
+GHIII. 
+.HJ... 
+LLJ.MM 
+
+
+Step 43: Move M to left
+AA.CDF 
+G.BCDF 
+G.BPPFK
+GHIII. 
+.HJ... 
+LLJMM. 
+
+
+Step 44: Move H to up
+AA.CDF 
+G.BCDF 
+GHBPPFK
+GHIII. 
+..J... 
+LLJMM. 
+
+
+Step 45: Move M to right
+AA.CDF 
+G.BCDF 
+GHBPPFK
+GHIII. 
+..J... 
+LLJ.MM 
+
+
+Step 46: Move I to right
+AA.CDF 
+G.BCDF 
+GHBPPFK
+GH.III 
+..J... 
+LLJ.MM 
+
+
+Step 47: Move H to down
+AA.CDF 
+G.BCDF 
+G.BPPFK
+GH.III 
+.HJ... 
+LLJ.MM 
+
+
+Step 48: Move G to down
+AA.CDF 
+..BCDF 
+G.BPPFK
+GH.III 
+GHJ... 
+LLJ.MM 
+
+
+Step 49: Move I to left
+AA.CDF 
+..BCDF 
+G.BPPFK
+GHIII. 
+GHJ... 
+LLJ.MM 
+
+
+Step 50: Move M to left
+AA.CDF 
+..BCDF 
+G.BPPFK
+GHIII. 
+GHJ... 
+LLJMM. 
+
+
+Step 51: Move H to up
+AA.CDF 
+.HBCDF 
+GHBPPFK
+G.III. 
+G.J... 
+LLJMM. 
+
+
+Step 52: Move M to right
+AA.CDF 
+.HBCDF 
+GHBPPFK
+G.III. 
+G.J... 
+LLJ.MM 
+
+
+Step 53: Move I to left
+AA.CDF 
+.HBCDF 
+GHBPPFK
+GIII.. 
+G.J... 
+LLJ.MM 
+
+
+Step 54: Move M to left
+AA.CDF 
+.HBCDF 
+GHBPPFK
+GIII.. 
+G.J... 
+LLJMM. 
+
+
+Step 55: Move F to down
+AA.CD. 
+.HBCD. 
+GHBPP.K
+GIII.F 
+G.J..F 
+LLJMMF 
+
+
+Step 56: Move P to right
+AA.CD. 
+.HBCD. 
+GHB..PK
+GIII.F 
+G.J..F 
+LLJMMF 
+
+

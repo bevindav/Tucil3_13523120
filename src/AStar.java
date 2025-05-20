@@ -45,12 +45,15 @@ public class AStar {
         startState.saveNoSolutionToFile(visitCount, endTime - startTime);
     }
 
-    public static SearchResult GUIsolve(State initialState) {
+    public static SearchResult GUIsolve(State initialState, int heuristicType) {
         long startTime = System.currentTimeMillis();
         int visitCount = 0;
+        // Comparator tetap sama, pakai cost + heuristic
         PriorityQueue<State> openSet = new PriorityQueue<>(aStarComparator);
         Map<State, Integer> bestFScore = new HashMap<>();
 
+        // Set heuristic sesuai pilihan user
+        initialState.setHeuristic(Heuristic.calculate(initialState, heuristicType));
         openSet.add(initialState);
         bestFScore.put(initialState, initialState.getCost() + initialState.getHeuristic());
 
@@ -64,6 +67,8 @@ public class AStar {
             }
 
             for (State next : current.getNextStates()) {
+                // Set heuristic untuk next state sesuai pilihan user
+                next.setHeuristic(Heuristic.calculate(next, heuristicType));
                 int g = next.getCost();
                 int f = g + next.getHeuristic();
 

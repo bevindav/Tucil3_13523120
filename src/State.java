@@ -31,6 +31,10 @@ public class State implements Comparable<State> {
         return heuristic;
     }
 
+    public void setHeuristic(int heuristic) {
+        this.heuristic = heuristic;
+    }
+    
     public String getMove() {
         return move;
     }
@@ -329,6 +333,10 @@ public class State implements Comparable<State> {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public Piece getPieces(char id) {
+        return pieces.get(id);
     }
 
     public String toStringWithoutColor() {

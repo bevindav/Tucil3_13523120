@@ -64,11 +64,13 @@ public class BeamSearch {
         return key.toString();
     }
 
-    public static SearchResult GUIsolve(State initialState, int beamWidth) {
+    public static SearchResult GUIsolve(State initialState, int beamWidth, int heuristicType) {
         long startTime = System.currentTimeMillis();
         Set<String> visited = new HashSet<>();
         int nodeCount = 0;
         List<State> currentBeam = new ArrayList<>();
+        // Set heuristic untuk initialState sesuai pilihan user
+        initialState.setHeuristic(Heuristic.calculate(initialState, heuristicType));
         currentBeam.add(initialState);
 
         int iterations = 0;
@@ -89,6 +91,8 @@ public class BeamSearch {
                     String successorKey = getBoardKey(successor.getBoard().getBoard());
                     if (!visited.contains(successorKey)) {
                         successor.setPrevState(current); // Penting: set parent/prevState!
+                        // Set heuristic untuk successor sesuai pilihan user
+                        successor.setHeuristic(Heuristic.calculate(successor, heuristicType));
                         nextBeam.add(successor);
                         nodeCount++;
                     }

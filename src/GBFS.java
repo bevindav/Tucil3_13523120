@@ -41,12 +41,15 @@ public class GBFS {
         initialState.saveNoSolutionToFile(visitCount, endTime - startTime);
     }
 
-    public static SearchResult GUIsolve(State initialState) {
+    public static SearchResult GUIsolve(State initialState, int heuristicType) {
         long startTime = System.currentTimeMillis();
         int visitCount = 0;
         Set<State> visited = new HashSet<>();
-        PriorityQueue<State> queue = new PriorityQueue<>(gbfsComparator);
+        Comparator<State> guiComparator = Comparator.comparingInt(s -> Heuristic.calculate(s, heuristicType));
+        PriorityQueue<State> queue = new PriorityQueue<>(guiComparator);
 
+        // Set heuristic untuk initialState
+        initialState.setHeuristic(Heuristic.calculate(initialState, heuristicType));
         queue.add(initialState);
 
         while (!queue.isEmpty()) {
@@ -63,7 +66,8 @@ public class GBFS {
 
             for (State next : current.getNextStates()) {
                 if (!visited.contains(next)) {
-                    next.setPrevState(current); // Set parent/prevState
+                    next.setPrevState(current);
+                    next.setHeuristic(Heuristic.calculate(next, heuristicType)); // Set heuristic untuk next state
                     queue.add(next);
                 }
             }
