@@ -1,0 +1,8 @@
+6 6
+10
+AABBCD
+.P..CD
+.P.HEF
+GG.HEF
+IIJ...
+ K

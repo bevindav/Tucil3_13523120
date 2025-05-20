@@ -1,0 +1,7 @@
+5 7
+9
+ K
+AABCCDD
+.P..CDD
+.P..EFF
+GGHHIFF

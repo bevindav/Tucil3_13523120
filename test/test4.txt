@@ -1,0 +1,11 @@
+8 8
+14
+.AA.BB..
+.P..D.EC
+.P..D.EC
+FFGG..HH
+I.J...HH
+..KKK...
+..MMM...
+..NNN...
+ K

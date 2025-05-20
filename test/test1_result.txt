@@ -1,4 +1,4 @@
-Rush Hour Solution - Tue May 20 18:55:12 WIB 2025
+Rush Hour Solution - Tue May 20 21:43:16 WIB 2025
 Algorithm used: GBFS
 Total steps: 56
 -------------------------------------
