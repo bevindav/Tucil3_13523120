@@ -2,12 +2,13 @@ import java.io.*;
 import java.util.*;
 
 public class State implements Comparable<State> {
-    private Map<Character, Piece> pieces; // Map of vehicle IDs to Piece objects
+    private Map<Character, Piece> pieces; //map dari vehicle ID dan Piece objek
     private Board board;
     private int cost;
-    private State parent; // To track the solution path
+    private State parent; // track solusi
     private String move;
-    private int heuristic; // For A* search
+    private State prevState;
+    private int heuristic; 
 
     public State(Map<Character, Piece> pieces, Board board, int cost, State parent, String move) {
         this.pieces = pieces;
@@ -42,7 +43,6 @@ public class State implements Comparable<State> {
         this.parent = parent;
     }
 
-    // Compute heuristic for A* search
     private int computeHeuristic() {
         Piece xCar = pieces.get('P');
         if (xCar == null) return 0;
@@ -51,13 +51,11 @@ public class State implements Comparable<State> {
         if (xCar.getOrientation() == Piece.Orientation.HORIZONTAL) {
             int row = xCar.getY();
             if (board.getExitX() == -1) {
-                // Exit on the left side
                 int leftCol = xCar.getX();
                 for (int c = leftCol - 1; c >= 0; c--) {
                     if (board.getBoard()[row][c] != '.') count++;
                 }
             } else {
-                // Exit on the right side
                 int rightEnd = xCar.getX() + xCar.getSize() - 1;
                 for (int c = rightEnd + 1; c < board.getBoard()[0].length; c++) {
                     if (board.getBoard()[row][c] != '.') count++;
@@ -66,13 +64,11 @@ public class State implements Comparable<State> {
         } else {
             int col = xCar.getX();
             if (board.getExitY() == -1) {
-                // Exit on the top
                 int topRow = xCar.getY();
                 for (int r = topRow - 1; r >= 0; r--) {
                     if (board.getBoard()[r][col] != '.') count++;
                 }
             } else {
-                // Exit on the bottom
                 int bottomEnd = xCar.getY() + xCar.getSize() - 1;
                 for (int r = bottomEnd + 1; r < board.getBoard().length; r++) {
                     if (board.getBoard()[r][col] != '.') count++;
@@ -82,13 +78,11 @@ public class State implements Comparable<State> {
         return count;
     }
 
-    // Compare states based on cost (UCS)
     @Override
     public int compareTo(State other) {
         return Integer.compare(this.cost, other.cost);
     }
 
-    // Check if the red car has reached the exit
     public boolean isGoal() {
         Piece redCar = pieces.get('P');
         if (redCar == null) return false;
@@ -99,10 +93,8 @@ public class State implements Comparable<State> {
             int row = redCar.getY();
 
             if (board.getExitX() == -1) {
-                // Exit on the left, check if the leftmost part of the car is at the exit
                 return board.getExitY() == row && leftCol == board.getExitX();
             } else {
-                // Exit on the right
                 return board.getExitY() == row && rightEndCol == board.getExitX();
             }
         } else {
@@ -111,10 +103,8 @@ public class State implements Comparable<State> {
             int col = redCar.getX();
 
             if (board.getExitY() == -1) {
-                // Exit on the top
                 return board.getExitX() == col && topRow == board.getExitY();
             } else {
-                // Exit on the bottom
                 return board.getExitX() == col && bottomEndRow == board.getExitY();
             }
         }
@@ -123,7 +113,6 @@ public class State implements Comparable<State> {
     public List<State> getNextStates() {
         List<State> nextStates = new ArrayList<>();
         for (Piece p : pieces.values()) {
-            // Try both directions: forward (+1) and backward (-1)
             for (int direction : new int[]{1, -1}) {
                 int steps = 1;
                 while (true) {
@@ -194,7 +183,6 @@ public class State implements Comparable<State> {
     }
 
     private State moveVehicle(Piece p, int move) {
-        // Copy the vehicle and its map
         Map<Character, Piece> newPieces = new HashMap<>();
         for (Map.Entry<Character, Piece> entry : pieces.entrySet()) {
             newPieces.put(entry.getKey(), entry.getValue().copy());
@@ -202,20 +190,17 @@ public class State implements Comparable<State> {
 
         Piece movedPiece = newPieces.get(p.getPieceChar());
 
-        // Update the position of the moved vehicle
         if (movedPiece.getOrientation() == Piece.Orientation.HORIZONTAL) {
-            movedPiece.setX(movedPiece.getX() + move); // Horizontal movement (left/right)
+            movedPiece.setX(movedPiece.getX() + move); 
         } else {
-            movedPiece.setY(movedPiece.getY() + move); // Vertical movement (up/down)
+            movedPiece.setY(movedPiece.getY() + move); 
         }
 
-        // Create a new empty board
         char[][] newBoard = new char[board.getBoard().length][board.getBoard()[0].length];
         for (int i = 0; i < newBoard.length; i++) {
             Arrays.fill(newBoard[i], '.');
         }
 
-        // Update the positions of all the pieces on the new board
         for (Piece piece : newPieces.values()) {
             int r = piece.getY();
             int c = piece.getX();
@@ -234,12 +219,10 @@ public class State implements Comparable<State> {
             }
         }
 
-        // Calculate the new cost (1 per move)
         int newCost = this.cost + 1;
         Board newBoardCopy = board.copy();
         newBoardCopy.setBoard(newBoard);
 
-        // Determine the move direction and return the new state
         String direction = (movedPiece.getOrientation() == Piece.Orientation.HORIZONTAL)
                 ? (move > 0 ? "right" : "left")
                 : (move > 0 ? "down" : "up");
@@ -276,11 +259,10 @@ public class State implements Comparable<State> {
 
     @Override
     public String toString() {
-        // ANSI escape codes untuk warna
-        final String RESET = "\033[0m"; // Reset warna
-        final String RED = "\033[31m";  // Warna merah untuk primary car
-        final String GREEN = "\033[32m"; // Warna hijau untuk exit (K)
-        final String BLUE = "\033[34m";  // Warna biru untuk titik kosong
+        final String RESET = "\033[0m"; 
+        final String RED = "\033[31m";  
+        final String GREEN = "\033[32m";
+        final String BLUE = "\033[34m"; 
 
         StringBuilder sb = new StringBuilder();
         sb.append("\n=====================================\n");
@@ -294,19 +276,19 @@ public class State implements Comparable<State> {
         int rows = board.length;
         int cols = board[0].length;
 
-        // Pastikan kita mencetak board dengan warna sesuai dengan posisi exit dan primary piece
+        // make sure warna sesuai dengan posisi exit dan primary piece
         for (int y = 0; y < rows; y++) {
             for (int x = 0; x < cols; x++) {
                 if (x == exitX && y == exitY) {
-                    sb.append(GREEN + " K " + RESET);  // Highlight exit as 'K'
+                    sb.append(GREEN + " K " + RESET);  
                 } else {
                     char piece = board[y][x];
                     if (piece == 'P') {
-                        sb.append(RED + " P " + RESET);  // Highlight primary car
+                        sb.append(RED + " P " + RESET);  
                     } else if (piece == '.') {
-                        sb.append(BLUE + " . " + RESET);  // Highlight empty spaces
+                        sb.append(BLUE + " . " + RESET); 
                     } else {
-                        sb.append(" " + piece + " ");  // Default piece
+                        sb.append(" " + piece + " "); 
                     }
                 }
             }
@@ -336,11 +318,11 @@ public class State implements Comparable<State> {
         }
         Collections.reverse(path);
 
-        // Saving the solution to a file without color codes
+        //save tanpa warna
         try (PrintWriter writer = new PrintWriter(filename)) {
             for (State state : path) {
                 writer.println("Move: " + state.getMove());
-                writer.println(state.toStringWithoutColor());  // Save the plain text version (without color)
+                writer.println(state.toStringWithoutColor()); 
             }
             writer.println("Visited nodes: " + nodeCount);
             writer.println("Execution time: " + executionTime + " ms");
@@ -367,12 +349,12 @@ public class State implements Comparable<State> {
         for (int y = minRow; y <= maxRow; y++) {
             for (int x = minCol; x <= maxCol; x++) {
                 if (x == exitX && y == exitY) {
-                    sb.append("K");  // Exit position labeled 'K'
+                    sb.append("K");  
                 } else {
                     if (y >= 0 && y < rows && x >= 0 && x < cols) {
-                        sb.append(board[y][x]);  // Regular board display without color codes
+                        sb.append(board[y][x]);  
                     } else {
-                        sb.append(" ");  // Empty spaces outside the board
+                        sb.append(" "); 
                     }
                 }
             }
@@ -410,14 +392,21 @@ public class State implements Comparable<State> {
         System.out.println();
     }
 
+    public void setPrevState(State prev) {
+        this.prevState = prev;
+    }
+
+    public State getPrevState() {
+        return prevState;
+    }
+
     public List<State> getPath() {
         List<State> path = new ArrayList<>();
         State current = this;
         while (current != null) {
-            path.add(current);
-            current = current.parent;
+            path.add(0, current);
+            current = current.getPrevState();
         }
-        Collections.reverse(path);
         return path;
     }
 }

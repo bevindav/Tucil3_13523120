@@ -1,23 +1,22 @@
 import java.util.*;
 
 public class GBFS {
-    // Comparator for GBFS: f(n) = h(n), where h(n) is the heuristic
-    private static final Comparator<State> gbfsComparator = (s1, s2) -> {
-        int h1 = s1.getHeuristic();
-        int h2 = s2.getHeuristic();
-        return Integer.compare(h1, h2);
-    };
+    // comparator GBFS: f(n) = h(n)
+    private static final Comparator<State> gbfsComparator = Comparator.comparingInt(State::getHeuristic);
 
     public static void solve(State initialState) {
         long startTime = System.currentTimeMillis();
         int visitCount = 0;
-        PriorityQueue<State> openSet = new PriorityQueue<>(gbfsComparator);
-        Set<State> closedSet = new HashSet<>();
+        Set<State> visited = new HashSet<>();
+        PriorityQueue<State> queue = new PriorityQueue<>(gbfsComparator);
 
-        openSet.add(initialState);
+        queue.add(initialState);
 
-        while (!openSet.isEmpty()) {
-            State current = openSet.poll();
+        while (!queue.isEmpty()) {
+            State current = queue.poll();
+
+            if (visited.contains(current)) continue;
+            visited.add(current);
             visitCount++;
 
             if (current.isGoal()) {
@@ -29,11 +28,10 @@ public class GBFS {
                 return;
             }
 
-            closedSet.add(current);
-
             for (State next : current.getNextStates()) {
-                if (!closedSet.contains(next)) {
-                    openSet.add(next);
+                if (!visited.contains(next)) {
+                    next.setPrevState(current); // Set parent/prevState
+                    queue.add(next);
                 }
             }
         }
@@ -41,5 +39,38 @@ public class GBFS {
         System.out.println("No solution found.");
         long endTime = System.currentTimeMillis();
         initialState.saveNoSolutionToFile(visitCount, endTime - startTime);
+    }
+
+    public static SearchResult GUIsolve(State initialState) {
+        long startTime = System.currentTimeMillis();
+        int visitCount = 0;
+        Set<State> visited = new HashSet<>();
+        PriorityQueue<State> queue = new PriorityQueue<>(gbfsComparator);
+
+        queue.add(initialState);
+
+        while (!queue.isEmpty()) {
+            State current = queue.poll();
+
+            if (visited.contains(current)) continue;
+            visited.add(current);
+            visitCount++;
+
+            if (current.isGoal()) {
+                long endTime = System.currentTimeMillis();
+                return new SearchResult(current.getPath(), endTime - startTime, visitCount);
+            }
+
+            for (State next : current.getNextStates()) {
+                if (!visited.contains(next)) {
+                    next.setPrevState(current); // Set parent/prevState
+                    queue.add(next);
+                }
+            }
+        }
+        long endTime = System.currentTimeMillis();
+        List<State> noSolution = new ArrayList<>();
+        noSolution.add(initialState);
+        return new SearchResult(noSolution, endTime - startTime, visitCount);
     }
 }

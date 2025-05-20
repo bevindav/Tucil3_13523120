@@ -8,7 +8,7 @@ public class Piece {
     }
 
     private Orientation orientation;
-    private int x; // x and y start from the top-left corner
+    private int x; // x and y dari atas kiri
     private int y;
     private boolean isPrimary;
 
@@ -85,7 +85,6 @@ public class Piece {
         }
     }
 
-    // Prints the piece in the board representation
     public void printPiece() {
         if (orientation == Orientation.HORIZONTAL) {
             for (int i = 0; i < size; i++) {

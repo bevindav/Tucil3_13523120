@@ -76,6 +76,14 @@ public class Board {
         return primaryPiece;
     }
 
+    public int getRows() {
+        return rows;
+    }
+
+    public int getCols() {
+        return cols;
+    }
+
     public void setBoard(char[][] board) {
         this.board = board;
     }
@@ -85,21 +93,47 @@ public class Board {
     }
 
     public void printBoard() {
+        if (exitY == -1 && exitX >= 0 && exitX < cols) {
+            for (int j = 0; j < cols; j++) {
+                if (j == exitX) {
+                    System.out.print("\u001B[32mK\u001B[0m");
+                } else {
+                    System.out.print(" ");
+                }
+            }
+            System.out.println();
+        }
+
         for (int i = 0; i < rows; i++) {
+            if (exitX == -1 && exitY == i) {
+                System.out.print("\u001B[32mK\u001B[0m");
+            } else if (exitX == -1) {
+                System.out.print(" ");
+            }
+
             for (int j = 0; j < cols; j++) {
                 char cell = board[i][j];
                 if (cell == 'P') {
-                    // Primary piece (red car) - Print in red in terminal
-                    System.out.print("\u001B[31m" + cell + "\u001B[0m ");  // Red color
-                } else if (cell == 'K') {
-                    // Exit - Print in green in terminal
-                    System.out.print("\u001B[32m" + cell + "\u001B[0m ");  // Green color
-                } else if (cell != '.') {
-                    // Other pieces - Print in blue in terminal
-                    System.out.print("\u001B[34m" + cell + "\u001B[0m ");  // Blue color
+                    System.out.print("\u001B[31m" + cell + "\u001B[0m");
+                } else if (cell == '.') {
+                    System.out.print(cell);
                 } else {
-                    // Empty spaces - Default color
-                    System.out.print(cell + " ");
+                    System.out.print("\u001B[34m" + cell + "\u001B[0m");
+                }
+            }
+
+            if (exitX == cols && exitY == i) {
+                System.out.print("\u001B[32mK\u001B[0m");
+            }
+            System.out.println();
+        }
+
+        if (exitY == rows && exitX >= 0 && exitX < cols) {
+            for (int j = 0; j < cols; j++) {
+                if (j == exitX) {
+                    System.out.print("\u001B[32mK\u001B[0m");
+                } else {
+                    System.out.print(" ");
                 }
             }
             System.out.println();
@@ -115,82 +149,103 @@ public class Board {
     public void readFromFile(String fileName) {
         try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
             String line;
-            line = br.readLine();  // Read dimensions
+            line = br.readLine();  // dimensi
             if (line != null) {
                 String[] dimensions = line.split(" ");
-                rows = Integer.parseInt(dimensions[0]);
-                cols = Integer.parseInt(dimensions[1]);
-                board = new char[rows][cols];
-            }
+                try {
+                    rows = Integer.parseInt(dimensions[0]);
+                    cols = Integer.parseInt(dimensions[1]);
+                } catch (NumberFormatException e) {
+                    throw new IllegalArgumentException("Invalid dimension format. Make sure its in valid format :)");
+                }
 
-            line = br.readLine();  // Read nonPieceCount
-            if (line != null) {
-                nonPieceCount = Integer.parseInt(line);
-            }
-
-            char[][] tempBoard = new char[rows + 1][cols + 1];
-            for (int i = 0; i < rows + 1; i++) {
-                Arrays.fill(tempBoard[i], ' ');
-            }
-
-            int i = 0;
-            while ((line = br.readLine()) != null && i < rows + 1) {
-                for (int j = 0; j < cols + 1; j++) {
-                    if (j < line.length()) {
-                        tempBoard[i][j] = line.charAt(j);
-                        if (line.charAt(j) == 'K') {
-                            exitX = j;
-                            exitY = i;
-                            if (exitY == 0 && exitX < cols) exitY = -1;
-                            else if (exitX == 0 && exitY < rows) exitX = -1;
+                if (rows <= 0 || cols <= 0) {
+                    throw new IllegalArgumentException("Invalid dimension values. Rows and columns must be positive integers :)");
+                }
+                
+                List<String> inputLines = new ArrayList<>();
+                int maxLength = 0;
+                int kRow = -1, kCol = -1;
+                
+                // nonPieceCount
+                line = br.readLine();
+                if (line != null) {
+                    nonPieceCount = Integer.parseInt(line);
+                }
+                
+                int rowCount = 0;
+                while ((line = br.readLine()) != null && rowCount < rows + 1) { // +1 untuk check K
+                    inputLines.add(line);
+                    maxLength = Math.max(maxLength, line.length());
+                    
+                    for (int i = 0; i < line.length(); i++) {
+                        if (line.charAt(i) == 'K') {
+                            kRow = rowCount;
+                            kCol = i;
                         }
                     }
+                    rowCount++;
                 }
-                i++;
-            }
-
-            List<Character> items = new ArrayList<>();
-            for (int k = 0; k < rows + 1; k++) {
-                for (int j = 0; j < tempBoard[k].length; j++) {
-                    char c = tempBoard[k][j];
-                    if (c != ' ' && c != 'K') items.add(c);
+                
+                board = new char[rows][cols];
+                for (int i = 0; i < rows; i++) {
+                    Arrays.fill(board[i], '.');
                 }
-            }
-
-            for (int k = 0; k < rows; k++) {
-                for (int j = 0; j < cols; j++) {
-                    board[k][j] = items.get(k * cols + j);
+                
+                for (int i = 0; i < Math.min(inputLines.size(), rows); i++) {
+                    String currentLine = inputLines.get(i);
+                    for (int j = 0; j < Math.min(currentLine.length(), cols); j++) {
+                        board[i][j] = currentLine.charAt(j);
+                    }
+                }
+                
+                if (kRow != -1 && kCol != -1) {
+                    exitY = kRow;
+                    exitX = kCol;
                 }
             }
 
             boolean[][] isChecked = new boolean[rows][cols];
-            for (int k = 0; k < rows; k++) {
-                for (int j = 0; j < cols; j++) {
-                    if (!isChecked[k][j]) {
-                        isChecked[k][j] = true;
-                        char c = board[k][j];
-                        if (c == '.') continue;
+            nonPieceList.clear();
 
-                        if (j + 1 < cols && board[k][j + 1] == c) {
-                            int count = 1;
-                            while (j + count < cols && board[k][j + count] == c) {
-                                isChecked[k][j + count] = true;
-                                count++;
+            for (int i = 0; i < rows; i++) {
+                for (int j = 0; j < cols; j++) {
+                    if (!isChecked[i][j]) {
+                        isChecked[i][j] = true;
+                        char c = board[i][j];
+                        
+                        if (c == '.' || c == 'K') continue;
+
+                        if (j + 1 < cols && board[i][j + 1] == c) {
+                            int length = 1;
+                            while (j + length < cols && board[i][j + length] == c) {
+                                isChecked[i][j + length] = true;
+                                length++;
                             }
-                            Piece piece = new Piece(c, count, Piece.Orientation.HORIZONTAL, j, k);
+                            Piece piece = new Piece(c, length, Piece.Orientation.HORIZONTAL, j, i);
                             if (c == mainChar) {
                                 piece.setPrimary(true);
                                 primaryPiece = piece;
                             } else {
                                 nonPieceList.add(piece);
                             }
-                        } else if (k + 1 < rows && board[k + 1][j] == c) {
-                            int count = 1;
-                            while (k + count < rows && board[k + count][j] == c) {
-                                isChecked[k + count][j] = true;
-                                count++;
+                        } 
+                        else if (i + 1 < rows && board[i + 1][j] == c) {
+                            int length = 1;
+                            while (i + length < rows && board[i + length][j] == c) {
+                                isChecked[i + length][j] = true;
+                                length++;
                             }
-                            Piece piece = new Piece(c, count, Piece.Orientation.VERTICAL, j, k);
+                            Piece piece = new Piece(c, length, Piece.Orientation.VERTICAL, j, i);
+                            if (c == mainChar) {
+                                piece.setPrimary(true);
+                                primaryPiece = piece;
+                            } else {
+                                nonPieceList.add(piece);
+                            }
+                        }
+                        else if (c != '.') {
+                            Piece piece = new Piece(c, 1, Piece.Orientation.HORIZONTAL, j, i);
                             if (c == mainChar) {
                                 piece.setPrimary(true);
                                 primaryPiece = piece;
@@ -203,7 +258,7 @@ public class Board {
             }
 
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("Error reading the file, make sure the file is in valid format :)");
         }
     }
 
@@ -217,16 +272,21 @@ public class Board {
     }
 
     public Board copy() {
-        Board newBoard = new Board(rows, cols);
-        newBoard.setMainChar(mainChar);
-        newBoard.setNonPieceCount(nonPieceCount);
-        newBoard.setExitX(exitX);
-        newBoard.setExitY(exitY);
+        Board newBoard = new Board();
+        newBoard.rows = this.rows;
+        newBoard.cols = this.cols;
+        newBoard.mainChar = this.mainChar;
+        newBoard.nonPieceCount = this.nonPieceCount;
+        newBoard.exitX = this.exitX;
+        newBoard.exitY = this.exitY;
+
+        newBoard.board = new char[rows][cols];
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
-                newBoard.setChar(i, j, board[i][j]);
+                newBoard.board[i][j] = this.board[i][j];
             }
         }
+        
         return newBoard;
     }
 

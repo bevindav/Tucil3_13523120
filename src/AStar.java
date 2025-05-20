@@ -44,4 +44,41 @@ public class AStar {
         long endTime = System.currentTimeMillis();
         startState.saveNoSolutionToFile(visitCount, endTime - startTime);
     }
+
+    public static SearchResult GUIsolve(State initialState) {
+        long startTime = System.currentTimeMillis();
+        int visitCount = 0;
+        PriorityQueue<State> openSet = new PriorityQueue<>(aStarComparator);
+        Map<State, Integer> bestFScore = new HashMap<>();
+
+        openSet.add(initialState);
+        bestFScore.put(initialState, initialState.getCost() + initialState.getHeuristic());
+
+        while (!openSet.isEmpty()) {
+            State current = openSet.poll();
+            visitCount++;
+
+            if (current.isGoal()) {
+                long endTime = System.currentTimeMillis();
+                return new SearchResult(current.getPath(), endTime - startTime, visitCount);
+            }
+
+            for (State next : current.getNextStates()) {
+                int g = next.getCost();
+                int f = g + next.getHeuristic();
+
+                // Set parent/prevState agar path bisa ditelusuri di GUI
+                next.setPrevState(current);
+
+                if (!bestFScore.containsKey(next) || f < bestFScore.get(next)) {
+                    bestFScore.put(next, f);
+                    openSet.add(next);
+                }
+            }
+        }
+        long endTime = System.currentTimeMillis();
+        List<State> noSolution = new ArrayList<>();
+        noSolution.add(initialState);
+        return new SearchResult(noSolution, endTime - startTime, visitCount);
+    }
 }
